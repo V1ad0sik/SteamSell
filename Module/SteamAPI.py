@@ -1,15 +1,14 @@
 import requests, xmltodict
 
 
-
 class SteamAPI():
     def __init__(self, WebKey):
         self.WebKey = WebKey
         self.Session = requests.Session()
 
 
-    def GetUserInfo(self, SteamID):
-        return xmltodict.parse(self.Session.get(url = f"https://steamcommunity.com/id/{SteamID}/?xml=1").text)
+    def GetUserInfo(self, SteamID, Type = "id"):
+        return xmltodict.parse(self.Session.get(url = f"https://steamcommunity.com/{Type}/{SteamID}/?xml=1").text)
 
 
     def GetGameList(self, SteamID64):
@@ -17,5 +16,9 @@ class SteamAPI():
 
 
     def NormalizeURL(slef, URL):
-        return URL.replace("https://steamcommunity.com/id/", "").replace("http://steamcommunity.com/id/", "").replace("/", "")
-        
+        URL = URL.replace("http://steamcommunity.com/id/", "")
+        URL = URL.replace("https://steamcommunity.com/id/", "")
+        URL = URL.replace("http://steamcommunity.com/profiles/", "")
+        URL = URL.replace("https://steamcommunity.com/profiles/", "")
+
+        return URL.replace("/", "")
