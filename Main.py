@@ -11,26 +11,26 @@ while (True):
     Info = Steam.GetUserInfo(SteamID = PersonID)
 
 
-    InfoVar = "> Имя: " + str(Info["profile"]["steamID"]) + "\n"
+    InfoVar = "\n> Имя: " + str(Info["profile"]["steamID"]) + "\n"
     InfoVar += "> Страна: " + str(Info["profile"]["location"]) + "\n"
     InfoVar += "> Символов в ID: " + str(len(Info["profile"]["customURL"])) + "\n"
     InfoVar += "> VAC блокировка: " + "присутствует" + "\n" if Info["profile"]["vacBanned"] else "отсутствует" + "\n"
     InfoVar += "> Тип профиля: " + str(Info["profile"]["privacyState"]) + "\n"
     InfoVar += "> Регистрация: " + str(Info["profile"]["memberSince"])
 
-    
+
     pyperclip.copy(InfoVar)
-    
+
     print(InfoVar)
     print("\n> Информация об аккаунте скопирована в буфер обмена.")
-    input("> Нажмите на Enter для продолжения...")
+    input("> Нажмите на Enter для продолжения...\n\n")
 
 
     SteamID64 = Info["profile"]["steamID64"]
     GameList = Steam.GetGameList(SteamID64 = SteamID64)["response"]
 
 
-    InfoVar = ("Всего игр на аккаунте: " + str(GameList["game_count"]) + "\n")
+    InfoVar = ("> Всего игр на аккаунте: " + str(GameList["game_count"]) + "\n")
     GameList = GameList["games"]
 
 
@@ -38,7 +38,7 @@ while (True):
         Name = GameList[Game]["name"]
         Time = datetime.timedelta(minutes = GameList[Game]["playtime_forever"])
 
-        InfoVar += (f"{Name} ({str(Time) if Time.seconds > 0 else 'не запускалось'})\n")
+        InfoVar += (f"[{Game + 1}] {Name} ({str(Time) if Time.seconds > 0 else 'не запускалось'})\n")
 
 
     pyperclip.copy(InfoVar)
