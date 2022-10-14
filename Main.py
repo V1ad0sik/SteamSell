@@ -19,7 +19,8 @@ while (True):
     InfoVar += "> Регистрация: " + str(Info["profile"]["memberSince"])
 
     
-
+    pyperclip.copy(InfoVar)
+    
     print(InfoVar)
     print("\n> Информация об аккаунте скопирована в буфер обмена.")
     input("> Нажмите на Enter для продолжения...")
