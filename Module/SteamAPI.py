@@ -13,7 +13,7 @@ class SteamAPI():
 
 
     def GetGameList(self, SteamID64):
-        return self.Session.get(f"http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={self.WebKey}&steamid=76561198318683779&format=json&include_appinfo=1").json()
+        return self.Session.get(f"http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={self.WebKey}&steamid={SteamID64}&format=json&include_appinfo=1").json()
 
 
     def NormalizeURL(slef, URL):
