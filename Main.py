@@ -7,16 +7,22 @@ Steam = SteamAPI(WebKey = Read("WebKey"))
 
 
 while (True):
-    PersonID = Steam.NormalizeURL(str(input("Введите ссылку на аккаунт: ")))
-    Info = Steam.GetUserInfo(SteamID = PersonID)
+    PersonID = Steam.NormalizeURL(URL = str(input("Введите ссылку на аккаунт: ")))
+
+    Type = "id"
+    Info = Steam.GetUserInfo(SteamID = PersonID, Type = Type)
+
+    if ("error" in str(Info)):
+        Type = "profiles"
+        Info = Steam.GetUserInfo(SteamID = PersonID, Type = Type)
 
 
-    InfoVar = "\n> Имя: " + str(Info["profile"]["steamID"]) + "\n"
-    InfoVar += "> Страна: " + str(Info["profile"]["location"]) + "\n"
-    InfoVar += "> Символов в ID: " + str(len(Info["profile"]["customURL"])) + "\n"
-    InfoVar += "> VAC блокировка: " + "присутствует" + "\n" if Info["profile"]["vacBanned"] else "отсутствует" + "\n"
-    InfoVar += "> Тип профиля: " + str(Info["profile"]["privacyState"]) + "\n"
-    InfoVar += "> Регистрация: " + str(Info["profile"]["memberSince"])
+    InfoVar = "\n> Имя: " + str(Info["profile"]["steamID"])
+    InfoVar += "\n> Страна: " + str(Info["profile"]["location"])
+    InfoVar += "\n> Символов в ID: " + str(len(Info["profile"]["customURL"])) if Type == "id" else "\n> Символов в ID: 0"
+    InfoVar += "\n> VAC блокировка: " + "присутствует" if Info["profile"]["vacBanned"] else "отсутствует"
+    InfoVar += "\n> Тип профиля: " + str(Info["profile"]["privacyState"])
+    InfoVar += "\n> Регистрация: " + str(Info["profile"]["memberSince"])
 
 
     pyperclip.copy(InfoVar)
